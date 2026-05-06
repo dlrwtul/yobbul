@@ -4,13 +4,30 @@ App de livraison pour l'Afrique de l'Ouest. Ce dépôt centralise le suivi de to
 
 ## Architecture
 
-| Projet | Stack | Port |
+| Projet | Stack | Accès |
 |---|---|---|
-| `yobbul-api` | NestJS monorepo (7 microservices) | 3001–3008 |
+| `yobbul-api` | NestJS — 1 gateway + 7 microservices | gateway :3000, WS :3003 |
 | `yobbul-client` | React Native / Expo (app client) | — |
 | `yobbul-pro` | React Native / Expo (app livreur) | — |
-| `yobbul-admin` | Vite + React + shadcn/ui | 5173 |
-| `yobbul-ai` | FastAPI + LightGBM + Claude | 8000 |
+| `yobbul-admin` | Vite + React + shadcn/ui | :5173 |
+| `yobbul-ai` | FastAPI + LightGBM + Claude | :3007 |
+
+```
+yobbul-client  ─┐
+yobbul-pro     ─┤──► gateway:3000 ──► microservices (réseau Docker interne)
+yobbul-admin   ─┘
+                       WebSocket tracking → :3003 (connexion directe)
+```
+
+## Ports exposés à l'hôte (dev)
+
+| Port | Service |
+|---|---|
+| **3000** | gateway REST — point d'entrée unique |
+| **3003** | tracking WebSocket |
+| **3007** | yobbul-ai FastAPI |
+| 5173 | yobbul-admin Vite |
+| 5432 / 6379 / 9092 / 27017 / 8025 | Infrastructure (Postgres, Redis, Kafka, MongoDB, MailHog) |
 
 ## Suivi des features
 
@@ -32,17 +49,3 @@ Au début de chaque nouvelle session Claude Code :
 | `blocked` | En attente d'une dépendance externe |
 | `verified` | Testé et validé en local |
 
-## Services — ports
-
-| Service | Port |
-|---|---|
-| auth | 3001 |
-| orders | 3002 |
-| tracking (WS) | 3003 |
-| payments | 3004 |
-| notifications | 3005 |
-| drivers | 3006 |
-| chat | 3008 |
-| yobbul-ai (FastAPI) | 8000 |
-| yobbul-admin (Vite) | 5173 |
-| MailHog UI | 8025 |
