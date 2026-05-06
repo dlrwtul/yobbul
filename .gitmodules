@@ -1,0 +1,15 @@
+[submodule "yobbul-api"]
+	path = yobbul-api
+	url = https://github.com/dlrwtul/yobbul-api.git
+[submodule "yobbul-client"]
+	path = yobbul-client
+	url = https://github.com/dlrwtul/yobbul-client.git
+[submodule "yobbul-admin"]
+	path = yobbul-admin
+	url = https://github.com/dlrwtul/yobbul-admin.git
+[submodule "yobbul-ai"]
+	path = yobbul-ai
+	url = https://github.com/dlrwtul/yobbul-ai.git
+[submodule "yobbul-pro"]
+	path = yobbul-pro
+	url = https://github.com/dlrwtul/yobbul-pro.git
